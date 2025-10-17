@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-const { sequelize } = require("../config");
+const { sequelize } = require("./../configs");
 
 class Blog extends Model {}
 
@@ -30,7 +30,5 @@ Blog.init({
   timestamps: false,
   modelName: 'blog'
 });
-
-Blog.sync();
 
 module.exports = Blog

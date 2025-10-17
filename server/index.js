@@ -1,10 +1,12 @@
 require('dotenv').config();
-const { PORT } = require('./config');
-const { connectDb } = require('./utils');
+
+const { PORT, connectDb } = require('./configs');
 
 connectDb();
 
 const app = require('./app');
+
+
 
 
 const startServer = async () => {
