@@ -7,8 +7,6 @@ connectDb();
 const app = require('./app');
 
 
-
-
 const startServer = async () => {
 
     const server = app.listen(PORT, (err) => {

@@ -5,5 +5,5 @@ Content-Type: application/json
     "author": "R*Q",
     "url": "https://blog.playstation.com/2022/03/08/pre-load-gtav-and-gta-online-on-ps5/",
     "title": "Pre-load GTAV and GTA Online on PS5",
-    "likes": "20"
+    "likes": 20
 }

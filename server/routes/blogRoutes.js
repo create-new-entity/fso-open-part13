@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const Blog = require('../models/Blog');
-const { getAllBlogs, createNewBlog, deleteBlog } = require('../controllers/blogs');
+const { getAllBlogs, createNewBlog, deleteBlog, updateBlog } = require('../controllers/blogs');
+const { extractBlog } = require('../middlewares');
+const { validateBlogId } = require('../middlewares/blogMiddlewares');
 
 const blogsRouter = new Router();
 
@@ -24,7 +26,7 @@ blogsRouter.post('/', async (req, res, next) => {
     }
 });
 
-blogsRouter.delete('/:id', async (req, res, next) => {
+blogsRouter.delete('/:id', validateBlogId,  async (req, res, next) => {
     try {
         deleteBlog(req.params.id);
         res.end();
@@ -34,5 +36,15 @@ blogsRouter.delete('/:id', async (req, res, next) => {
     }
     
 })
+
+blogsRouter.put('/:id', validateBlogId, async (req, res, next) => {
+    try {
+        const updatedBlog = await updateBlog(req.params.id, req.body)
+        res.json(updatedBlog);
+    }
+    catch(e) {
+        next(e);
+    }
+});
 
 module.exports = blogsRouter
