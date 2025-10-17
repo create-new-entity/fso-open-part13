@@ -1,0 +1,14 @@
+
+services:
+  local-dev-postgres:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./data/dev:/bitnami/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=myusername
+      - POSTGRESQL_PASSWORD=mypassword
+      - POSTGRESQL_DATABASE=blog_database
