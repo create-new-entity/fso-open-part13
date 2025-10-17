@@ -9,7 +9,7 @@
                 PORT=Some port here
             </li>
             <li>
-                POSTGRESQL_URL=postgresql://YOUR USERNAME HERE:YOUR PASSWORD HERE@localhost:5432/YOUR DATABASE NAME HERE
+                POSTGRESQL_URL=postgresql://myusername:mypassword@localhost:5432/blog_database
             </li>
         </ul>
     </li>
