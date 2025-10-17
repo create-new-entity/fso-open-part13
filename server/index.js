@@ -1,33 +1,32 @@
 require('dotenv').config();
-const { Sequelize, QueryTypes } = require('sequelize')
-const sequelize = new Sequelize(process.env.POSTGRESQL_URL)
-
 const { PORT } = require('./config');
+const { connectDb } = require('./utils');
+
+connectDb();
+
 const app = require('./app');
 
-const connectDB = async () => {
-     try {
-        await sequelize.authenticate()
-        console.log('DB Connected.')
-        const blogs = await sequelize.query("SELECT * FROM blogs", { type: QueryTypes.SELECT })
-        
-        blogs.forEach((blog) => {
-            console.log(`${blog.author}: ${blog.title}, ${blog.likes} likes`)
-        })
 
-        sequelize.close()
-        sequelize.close()
-    } catch (error) {
-        console.error('DB connection failed.', error)
-    }
-};
+const startServer = async () => {
 
-connectDB();
+    const server = app.listen(PORT, (err) => {
+        if(err) {
+            console.log('Server failed to start at ', PORT);
+            return;
+        }
+        console.log('Server listening at ', PORT)
+    });
 
-app.listen(PORT, (err) => {
-    if(err) {
-        console.log('Server failed to start at ', PORT);
-        return;
-    }
-    console.log('Server listening at ', PORT)
-});
+    const shutdown = async () => {
+        console.log("Shut down cleanly.");
+        await sequelize.close(); // close all DB connections
+        server.close(() => {
+            process.exit(0); // Gracefully shut down.
+        });
+    };
+
+    process.on("SIGINT", shutdown);  // User hits ctl c
+    process.on("SIGTERM", shutdown); // Something went wrong. Needs to shut down.
+}
+
+startServer()
