@@ -1,0 +1,10 @@
+POST http://localhost:3000/api/blogs
+Content-Type: application/json
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxQGdtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE3NjA4MDI3ODd9.6lielRUKWplR8nc2ev_hVpmZX83zplwWETm_Kv5s2Qs
+
+{
+    "author": "Corey Motley",
+    "url": "https://coreymotley.wordpress.com/2011/07/01/the-longest-blog-ever-written-about-red-dead-redemption/",
+    "title": "The longest blog ever written about Red Dead Redemption",
+    "likes": 30
+}
