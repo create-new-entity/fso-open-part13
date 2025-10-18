@@ -10,6 +10,10 @@ usersRouter.post('/', async (req, res, next) => {
         res.status(201).json(createUser)
     }
     catch(e) {
+        if(e.name === errorNames.sequelizeValidationError) {
+            next(e)
+            return;
+        }
         const createUserFailedError = new Error(errorMessages[errorNames.createUserFailed])
         createUserFailedError.name = errorNames.createUserFailed
         next(createUserFailedError)
@@ -35,6 +39,10 @@ usersRouter.put('/:username', async (req, res, next) => {
         res.status(204).json(updatedUser)
     }
     catch(e) {
+        if(e.name === errorNames.sequelizeValidationError) {
+            next(e);
+            return;
+        }
         const updateUserFailedError = new Error(errorMessages[errorNames.updateUserFailed])
         updateUserFailedError.name = errorNames.updateUserFailed
         next(updateUserFailedError)
