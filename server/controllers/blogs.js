@@ -1,5 +1,5 @@
 const { errorMessages, errorNames } = require("../middlewares/errorHandler");
-const { Blog } = require("../models");
+const { Blog, User } = require("../models");
 
 const getBlog = async (blogId) => {
     const blog = await Blog.findByPk(blogId);
@@ -7,7 +7,12 @@ const getBlog = async (blogId) => {
 };
 
 const getAllBlogs = async () => {
-    const blogs = await Blog.findAll();
+    const blogs = await Blog.findAll({
+        include: {
+            model: User
+        },
+        attributes: { exclude: ['userId'] }
+    });
     return blogs.map(blog => blog.toJSON());
 };
 

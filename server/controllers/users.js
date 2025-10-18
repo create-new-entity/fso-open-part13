@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Blog } = require("../models");
 
 
 const createUser = async (newUser) => {
@@ -7,7 +7,12 @@ const createUser = async (newUser) => {
 };
 
 const getAllUsers = async () => {
-    const allUsers = await User.findAll();
+    const allUsers = await User.findAll({
+        include: {
+            model: Blog,
+            attributes: { exclude: ['userId'] }
+        }
+    });
     return allUsers.map(user => user.toJSON());
 };
 
