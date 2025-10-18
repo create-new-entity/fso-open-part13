@@ -1,7 +1,5 @@
 const { Router } = require('express');
-const Blog = require('../models/Blog');
 const { getAllBlogs, createNewBlog, deleteBlog, updateBlog } = require('../controllers/blogs');
-const { extractBlog } = require('../middlewares');
 const { validateBlogId } = require('../middlewares/blogMiddlewares');
 
 const blogsRouter = new Router();

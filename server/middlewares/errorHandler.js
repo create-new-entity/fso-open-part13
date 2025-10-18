@@ -1,12 +1,21 @@
 
 const BLOG_NOT_FOUND = 'BlogNotFound';
+const CREATE_USER_FAILED = 'CreateUserFailed';
+const GET_USERS_FAILED = 'GetUsersFailed';
+const UPDATE_USER_FAILED = 'UpdateUserFailed';
 
 const errorNames = {
-    blogNotFound: BLOG_NOT_FOUND
+    blogNotFound: BLOG_NOT_FOUND,
+    createUserFailed: CREATE_USER_FAILED,
+    getUsersFailed: GET_USERS_FAILED,
+    updateUserFailed: UPDATE_USER_FAILED
 }
 
 const errorMessages = {
-    [BLOG_NOT_FOUND]: 'Blog not found.'
+    [BLOG_NOT_FOUND]: 'Blog not found.',
+    [CREATE_USER_FAILED]: 'Failed to create user.',
+    [GET_USERS_FAILED]: 'Failed to fetch users.',
+    [UPDATE_USER_FAILED]: 'Failed to update user.'
 }
 
 const errorHandler = (error, req, res, next) => {
