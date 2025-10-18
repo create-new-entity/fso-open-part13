@@ -1,3 +1,4 @@
+const { errorMessages, errorNames } = require("../middlewares/errorHandler");
 const { Blog } = require("../models");
 
 const getBlog = async (blogId) => {
@@ -15,10 +16,15 @@ const createNewBlog = async (newBlog) => {
     return createdBlog.toJSON();
 };
 
-const deleteBlog = async (id) => {
-    await Blog.destroy({
-        where: { id }
+const deleteBlog = async (id, userId) => {
+    const deletedCount = await Blog.destroy({
+        where: { id, userId }
     });
+    if(deletedCount === 0) {
+        const userNotAuthorizedError = new Error(errorMessages[errorNames.unauthorized])
+        userNotAuthorizedError.name = errorNames.unauthorized
+        throw userNotAuthorizedError;
+    }
 }
 
 const updateBlog = async (id, updateFields) => {

@@ -17,11 +17,11 @@ const validateBlogId = async (req, res, next) => {
     try {
         const foundBlog = await Blog.findByPk(req.params.id)
         if(!foundBlog) {
-            
             const blogNotFoundError = new Error(errorMessages[errorNames.blogNotFound]);
             blogNotFoundError.name = errorNames.blogNotFound;
             throw blogNotFoundError
         }
+        next();
     }
     catch(e) {
         next(e)

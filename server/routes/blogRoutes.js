@@ -29,12 +29,13 @@ blogsRouter.post('/', tokenExtractor,async (req, res, next) => {
     }
 });
 
-blogsRouter.delete('/:id', validateBlogId,  async (req, res, next) => {
+blogsRouter.delete('/:id', tokenExtractor, validateBlogId,  async (req, res, next) => {
     try {
-        deleteBlog(req.params.id);
-        res.end();
+        await deleteBlog(req.params.id, req.decodedToken.id);
+        res.status(200).end();
     }
     catch(e) {
+        console.log('e', e.name, e.message)
         next(e);
     }
     
