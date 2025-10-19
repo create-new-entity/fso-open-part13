@@ -9,7 +9,7 @@ const getBlog = async (blogId) => {
 
 const getAllBlogs = async (search='') => {
     let where = {}
-    
+
     const titleHasSearchSubString = {
         title: {
             [Op.iLike]: `%${search}%`
@@ -25,13 +25,16 @@ const getAllBlogs = async (search='') => {
             [Op.or]: [titleHasSearchSubString, authorHasSearchSubString]
         }
     }
+
+    const orderByLikesDescending = ['likes', 'DESC']
     
     const blogs = await Blog.findAll({
         include: {
             model: User
         },
         attributes: { exclude: ['userId'] },
-        where
+        where,
+        order: [orderByLikesDescending]
     });
     return blogs.map(blog => blog.toJSON());
 };
