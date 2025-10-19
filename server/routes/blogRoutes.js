@@ -8,7 +8,7 @@ const blogsRouter = new Router();
 
 blogsRouter.get('/', async (req, res, next) => {
     try {
-        const allBlogs = await getAllBlogs();
+        const allBlogs = await getAllBlogs(req.query.search);
         res.json(allBlogs);
     }
     catch(e) {
@@ -35,7 +35,6 @@ blogsRouter.delete('/:id', tokenExtractor, validateBlogId,  async (req, res, nex
         res.status(200).end();
     }
     catch(e) {
-        console.log('e', e.name, e.message)
         next(e);
     }
     

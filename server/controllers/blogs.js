@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { errorMessages, errorNames } = require("../middlewares/errorHandler");
 const { Blog, User } = require("../models");
 
@@ -6,12 +7,22 @@ const getBlog = async (blogId) => {
     return blog.toJSON();
 };
 
-const getAllBlogs = async () => {
+const getAllBlogs = async (search='') => {
+    let where = {}
+    if(search) {
+        where = {
+            title: {
+                [Op.iLike]: `%${search}%`
+            }
+        }
+    }
+    
     const blogs = await Blog.findAll({
         include: {
             model: User
         },
-        attributes: { exclude: ['userId'] }
+        attributes: { exclude: ['userId'] },
+        where
     });
     return blogs.map(blog => blog.toJSON());
 };
