@@ -9,11 +9,20 @@ const getBlog = async (blogId) => {
 
 const getAllBlogs = async (search='') => {
     let where = {}
+    
+    const titleHasSearchSubString = {
+        title: {
+            [Op.iLike]: `%${search}%`
+        }
+    }
+    const authorHasSearchSubString = {
+        author: {
+            [Op.iLike]: `%${search}%`
+        }
+    }
     if(search) {
         where = {
-            title: {
-                [Op.iLike]: `%${search}%`
-            }
+            [Op.or]: [titleHasSearchSubString, authorHasSearchSubString]
         }
     }
     
