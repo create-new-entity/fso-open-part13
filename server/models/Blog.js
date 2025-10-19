@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const { sequelize } = require("./../configs");
+const { getInvalidYearErrorMessage, errorNames } = require("../middlewares/errorHandler");
 
 class Blog extends Model {}
 
@@ -23,6 +24,21 @@ Blog.init({
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 1991,
+      isNotFutureYear(value) {
+        const currentYear = new Date().getFullYear();
+        if (value > currentYear) {
+          const invalidYearError = new Error(getInvalidYearErrorMessage(currentYear));
+          invalidYearError.name = errorNames.invalidYear
+          throw invalidYearError;
+        }
+      }
+    }
   }
 }, {
   sequelize,

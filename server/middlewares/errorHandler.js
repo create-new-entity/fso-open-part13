@@ -10,6 +10,7 @@ const INVALID_USERNAME_PASSWORD = 'InvalidCredentials';
 const INVALID_TOKEN = 'InvalidToken';
 const TOKEN_MISSING = 'TokenMissing';
 const UNAUTHORIZED = 'Unauthorized';
+const INVALID_YEAR = 'InvalidYear';
 
 const errorNames = {
     blogNotFound: BLOG_NOT_FOUND,
@@ -22,7 +23,12 @@ const errorNames = {
     invalidUsernameOrPassword: INVALID_USERNAME_PASSWORD,
     invalidToken: INVALID_TOKEN,
     tokenMissing: TOKEN_MISSING,
-    unauthorized: UNAUTHORIZED
+    unauthorized: UNAUTHORIZED,
+    invalidYear: INVALID_YEAR
+}
+
+const getInvalidYearErrorMessage = (maxYear) => {
+    return `Year should be within the range of 1991 and ${maxYear}`;
 }
 
 const errorMessages = {
@@ -41,7 +47,7 @@ const errorHandler = (error, req, res, next) => {
     if(error.name === errorNames.blogNotFound) {
         res.status(404).send({ error: error.message });
     }
-    else if(error.name === errorNames.sequelizeValidationError) {
+    else if(error.name === errorNames.sequelizeValidationError || error.name === errorNames.invalidYear) {
         res.status(400).send({ error: error.message });
     }
     else if(error.name === errorNames.loginFailed || error.name === errorNames.unauthorized) {
@@ -56,5 +62,6 @@ const errorHandler = (error, req, res, next) => {
 module.exports = {
     errorNames,
     errorMessages,
-    errorHandler
+    errorHandler,
+    getInvalidYearErrorMessage
 }
