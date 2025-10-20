@@ -18,7 +18,13 @@ const getAllUsers = async () => {
     return allUsers.map(user => user.toJSON());
 };
 
-const getUser = async (userId) => {
+const getUser = async (userId, read) => {
+    let whereRead = {}
+    if(typeof read === 'string') {
+        whereRead = {
+            read: read === 'true'
+        }
+    }
     const foundUser = await User.findOne({
         where: {
             id: userId
@@ -30,7 +36,8 @@ const getUser = async (userId) => {
                 as: 'readings',
                 attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
                 through: {
-                    attributes: ['read', 'id']
+                    attributes: ['read', 'id'],
+                    where: whereRead
                 }
             }
         ]
