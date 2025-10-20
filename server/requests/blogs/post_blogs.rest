@@ -1,11 +1,11 @@
 POST http://localhost:3000/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIyQGdtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE3NjA5ODA3OTB9.U_DOXIfDtblyj8Sd_mLwNRU6i9eaXfOjoRs_TWJ3KTk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxQGdtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE3NjA5OTU4NzJ9.I8D3277qqwSASB6Fli13wp5bYK_2puTyDcZ53zi9pdc
 
 {
-    "author": "Alissa McAloon",
-    "url": "https://www.gamedeveloper.com/console/ea-praises-battlefield-6-as-franchise-best-launch-with-7-million-sold",
-    "title": "EA praises Battlefield 6 as franchise-best launch with 7 million sold",
-    "likes": 3,
-    "year": 2025
+    "author": "Gabriel O'Meara",
+    "url": "https://blog.gamesight.io/the-metamorphosis-of-gta-v-on-twitch/",
+    "title": "Part 2 - The Metamorphosis of GTA V Online",
+    "likes": 12,
+    "year": 2021
 }

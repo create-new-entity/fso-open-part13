@@ -11,6 +11,8 @@ const INVALID_TOKEN = 'InvalidToken';
 const TOKEN_MISSING = 'TokenMissing';
 const UNAUTHORIZED = 'Unauthorized';
 const INVALID_YEAR = 'InvalidYear';
+const USER_IS_DISABLED = 'UserIsDisabled';
+const TOKEN_EXPIRED = 'TokenExpired';
 
 const errorNames = {
     blogNotFound: BLOG_NOT_FOUND,
@@ -24,7 +26,9 @@ const errorNames = {
     invalidToken: INVALID_TOKEN,
     tokenMissing: TOKEN_MISSING,
     unauthorized: UNAUTHORIZED,
-    invalidYear: INVALID_YEAR
+    invalidYear: INVALID_YEAR,
+    userIsDisabled: USER_IS_DISABLED,
+    tokenExpired: TOKEN_EXPIRED
 }
 
 const getInvalidYearErrorMessage = (maxYear) => {
@@ -40,7 +44,9 @@ const errorMessages = {
     [INVALID_USERNAME_PASSWORD]: 'Username or Password is wrong.',
     [INVALID_TOKEN]: 'Invalid token.',
     [TOKEN_MISSING]: 'Token is missing.',
-    [UNAUTHORIZED]: 'User is not authorized to perform this action.'
+    [UNAUTHORIZED]: 'User is not authorized to perform this action.',
+    [USER_IS_DISABLED]: 'User is disabled. Please contact admin.',
+    [TOKEN_EXPIRED]: 'Token expired. Please login again.'
 }
 
 const errorHandler = (error, req, res, next) => {
@@ -50,7 +56,7 @@ const errorHandler = (error, req, res, next) => {
     else if(error.name === errorNames.sequelizeValidationError || error.name === errorNames.invalidYear) {
         res.status(400).send({ error: error.message });
     }
-    else if(error.name === errorNames.loginFailed || error.name === errorNames.unauthorized) {
+    else if(error.name === errorNames.loginFailed || error.name === errorNames.unauthorized || error.name === errorNames.userIsDisabled || error.name === errorNames.tokenExpired) {
         res.status(401).send({ error: error.message });
     }
     else {

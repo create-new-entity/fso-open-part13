@@ -24,7 +24,6 @@ module.exports = {
                 defaultValue: false
             }
         })
-  
     },
     down: async ({ context: queryInterface }) => {
         await queryInterface.dropTable('readings')
