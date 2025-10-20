@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const { addToReadingList } = require('../controllers/users');
+const { addToReadingList, updateRead } = require('../controllers/users');
+const tokenExtractor = require('../middlewares/authentication');
 
 const readingListRouter = new Router();
 
@@ -13,6 +14,18 @@ readingListRouter.post('/', async (req, res, next) => {
         next(e)
     }
 
+});
+
+readingListRouter.put('/:id', tokenExtractor, async (req, res, next) => {
+    try {
+        const { username, id } = req.decodedToken
+        const { read } = req.body
+        await updateRead(req.params.id, id, read);
+        res.status(204).end();
+    }
+    catch(e) {
+        next(e)
+    }
 });
 
 module.exports = readingListRouter;

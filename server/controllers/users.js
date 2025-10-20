@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { User, Blog } = require("../models");
 const Reading = require("../models/Reading");
 
@@ -58,10 +59,23 @@ const addToReadingList = async ({ blogId, userId }) => {
     return createdNewToRead.toJSON();
 };
 
+const updateRead = async (readListId, userId, read) => {
+    await Reading.update(
+        { read },
+        {
+            where: {
+                id: readListId,
+                userId
+            }
+        }
+    );
+}
+
 module.exports = {
     createUser,
     getAllUsers,
     getUser,
     updateUsername,
-    addToReadingList
+    addToReadingList,
+    updateRead
 }
