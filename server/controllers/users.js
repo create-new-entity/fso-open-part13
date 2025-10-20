@@ -1,4 +1,5 @@
 const { User, Blog } = require("../models");
+const Reading = require("../models/Reading");
 
 
 const createUser = async (newUser) => {
@@ -16,6 +17,26 @@ const getAllUsers = async () => {
     return allUsers.map(user => user.toJSON());
 };
 
+const getUser = async (userId) => {
+    const foundUser = await User.findOne({
+        where: {
+            id: userId
+        },
+        attributes: ['name', 'username'],
+        include: [
+            {
+                model: Blog,
+                as: 'readings',
+                attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
+                through: {
+                    attributes: ['read', 'id']
+                }
+            }
+        ]
+    })
+    return foundUser.toJSON();
+}
+
 const updateUsername = async (currentUsername, newUsername) => {
     const [_, updatedUser] = await User.update(
         { username: newUsername },
@@ -29,8 +50,18 @@ const updateUsername = async (currentUsername, newUsername) => {
     return updatedUser;
 };
 
+const addToReadingList = async ({ blogId, userId }) => {
+    const newToRead = {
+        blogId, userId, read: false
+    }
+    const createdNewToRead = await Reading.create(newToRead);
+    return createdNewToRead.toJSON();
+};
+
 module.exports = {
     createUser,
     getAllUsers,
-    updateUsername
+    getUser,
+    updateUsername,
+    addToReadingList
 }

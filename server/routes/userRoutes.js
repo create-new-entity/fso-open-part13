@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createUser, getAllUsers, updateUsername } = require('../controllers/users');
+const { createUser, getAllUsers, updateUsername, getUser } = require('../controllers/users');
 const { errorMessages, errorNames } = require('../middlewares/errorHandler');
 const usersRouter = new Router();
 
@@ -29,6 +29,16 @@ usersRouter.get('/', async (req, res, next) => {
         const getUsersError = new Error(errorMessages[errorNames.getUsersFailed])
         getUsersError.name = errorNames.getUsersFailed
         next(getUsersError)
+    }
+});
+
+usersRouter.get('/:id', async (req, res, next) => {
+    try {
+        const foundUser = await getUser(req.params.id)
+        res.status(200).json(foundUser);
+    }
+    catch(e) {
+        next(e)
     }
 });
 

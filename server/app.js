@@ -5,6 +5,7 @@ const { errorHandler } = require('./middlewares/errorHandler');
 const usersRouter = require('./routes/userRoutes');
 const loginRouter = require('./routes/loginRoutes');
 const authorRoutes = require('./routes/authorRoutes');
+const readingListRouter = require('./routes/readingListsRoutes');
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/authors', authorRoutes);
+app.use('/api/readinglists', readingListRouter)
 app.use(errorHandler)
 
 module.exports = app;
